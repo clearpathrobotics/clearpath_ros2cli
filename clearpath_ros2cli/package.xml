@@ -6,10 +6,10 @@
   <description>A collection of ROS 2 command line tools created by Clearpath Robotics Inc.</description>
 
   <maintainer email="gautran@clearpath.ai">Guillaume Autran</maintainer>
-
   <license>Apache License 2.0</license>
-
   <author email="gautran@clearpath.ai">Guillaume Autran</author>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
 
   <exec_depend>ros2rosout</exec_depend>
   
