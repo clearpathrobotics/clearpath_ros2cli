@@ -21,7 +21,7 @@ import re
 
 
 class PrintVerb(VerbExtension):
-    """Outputs the '/rosout' content in a nicely formatted way"""
+    """Outputs the '/rosout' content in a nicely formatted way."""
 
     BLACK_TEXT = "\033[30;1m"
     BLUE_TEXT = "\033[34;1m"

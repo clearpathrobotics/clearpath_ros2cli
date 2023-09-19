@@ -17,7 +17,7 @@ from ros2cli.command import CommandExtension
 
 
 class RosoutCommand(CommandExtension):
-    """Prints the '/rosout' log stream """
+    """Prints the '/rosout' log stream."""
 
     def add_arguments(self, parser, cli_name):
         self._subparser = parser
