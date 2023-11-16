@@ -12,6 +12,7 @@
   <buildtool_depend>ament_cmake</buildtool_depend>
 
   <exec_depend>ros2rosout</exec_depend>
+  <exec_depend>ros2graph</exec_depend>
   
   <export>
     <build_type>ament_cmake</build_type>

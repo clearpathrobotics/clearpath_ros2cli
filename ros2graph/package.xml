@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format2.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="2">
+  <name>ros2graph</name>
+  <version>0.0.0</version>
+  <description>
+    The graph command for ROS 2 command line tools. This command generate a DOT format file representing the ROS2 node graph. This is a more lightweight version of the traditional rqt_graph command. 
+  </description>
+  <maintainer email="cposteam@clearpath.ai">Clearpath OS Team</maintainer>
+  <license>Apache License 2.0</license>
+
+  <author email="gautran@clearpath.ai">Guillaume Autran</author>
+
+  <depend>ros2cli</depend>
+
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>ament_xmllint</test_depend>
+  <test_depend>rclpy</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>
