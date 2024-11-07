@@ -1,11 +1,13 @@
+"""This script configures the packaging of the 'ros2diagnostics' project."""
+
 from setuptools import find_packages
 from setuptools import setup
 
-package_name = 'ros2rosout'
+package_name = 'ros2diagnostics'
 
 setup(
     name=package_name,
-    python_requires='>=3.1',
+    python_requires='>=3.10',
     version='0.0.0',
     packages=find_packages(exclude=['test']),
     data_files=[
@@ -15,12 +17,10 @@ setup(
     ],
     install_requires=['ros2cli'],
     zip_safe=True,
-    author='Guillaume Autran',
-    author_email='gautran@clearpath.ai',
-    maintainer='Guillaume Autran',
-    maintainer_email='gautran@clearpath.ai',
-    url='',
-    download_url='',
+    author='Yolanda Huang',
+    author_email='yhuang@ottomotors.com',
+    maintainer='Clearpath OS Team',
+    maintainer_email='cposteam@clearpath.ai',
     keywords=[],
     classifiers=[
         'Environment :: Console',
@@ -29,22 +29,22 @@ setup(
         'Programming Language :: Python',
     ],
     description="""\
-    A convenient command to display the /rosout logs \
+    A convenient command to display the diagnostics info \
     for ROS 2 command line tools""",
     long_description="""\
-    The package provides a cli tool to print \
-    the `/rosout` logs in a ROS 2 system""",
+    The package provides a cli tool to echo \
+    the diagnostics logs in a ROS 2 system""",
     license='BSD',
     tests_require=['pytest'],
     entry_points={
         'ros2cli.command': [
-            'rosout = ros2rosout.command.rosout:RosoutCommand',
+            'diagnostics = ros2diagnostics.command.diagnostics:DiagCommand',
         ],
         'ros2cli.extension_point': [
-            'ros2rosout.verb = ros2rosout.verb:VerbExtension',
+            'ros2diagnostics.verb = ros2diagnostics.verb:VerbExtension',
         ],
-        'ros2rosout.verb': [
-            'print = ros2rosout.verb.print:PrintVerb'
+        'ros2diagnostics.verb': [
+            'echo = ros2diagnostics.verb.echo:EchoVerb'
         ]
     }
 )

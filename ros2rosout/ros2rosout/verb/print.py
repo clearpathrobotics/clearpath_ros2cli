@@ -1,16 +1,31 @@
-# Copyright 2023 Clearpath Robotics
+# Copyright (c) 2024, Clearpath Robotics, Inc., All rights reserved.
 #
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+#    * Redistributions of source code must retain the above copyright
+#      notice, this list of conditions and the following disclaimer.
 #
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+#    * Redistributions in binary form must reproduce the above copyright
+#      notice, this list of conditions and the following disclaimer in the
+#      documentation and/or other materials provided with the distribution.
+#
+#    * Neither the name of the copyright holder nor the names of its
+#      contributors may be used to endorse or promote products derived from
+#      this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+# CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+# ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+# POSSIBILITY OF SUCH DAMAGE.
+
 from datetime import datetime
 from rcl_interfaces.msg import Log
 from ros2cli.node.strategy import NodeStrategy
@@ -38,14 +53,17 @@ class PrintVerb(VerbExtension):
     def add_arguments(self, parser, cli_name):
         add_arguments(parser)
         parser.add_argument(
-            '-l', '--level', default=int.from_bytes(Log.INFO, 'big'), type=int,
-            help='Print log statement with priority level greater than this value')
+            '-l', '--level', default=Log.INFO, type=int,
+            help='''Print log statement with priority level '
+            greater than this value''')
         parser.add_argument(
             '-n', '--node-regex', default=None,
-            help='Only print log statements from node(s) matching the regular expression provided')
+            help='''Only print log statements from node(s) matching the
+            regular expression provided''')
         parser.add_argument(
             '--no-color', action='store_true', default=False,
-            help='Disables the use of ASCII colors for the output of the command')
+            help='''Disables the use of ASCII colors
+            for the output of the command''')
         parser.add_argument(
             '-f', '--function-detail', action='store_true', default=False,
             help='Output function name, file, and line number')
@@ -101,7 +119,8 @@ class PrintVerb(VerbExtension):
     def rosout_cb(self, msg):
         if msg.level < self.args_.level:
             return
-        if self.args_.node_regex and not re.search(self.args_.node_regex, msg.name):
+        if self.args_.node_regex and not re.search(
+                self.args_.node_regex, msg.name):
             return
         color = self.get_color(msg.level)
         lvl = self.add_color(self.level_to_string(msg.level), color)
@@ -120,5 +139,6 @@ class PrintVerb(VerbExtension):
         self.args_ = args
 
         with NodeStrategy(args) as node:
-            self.rosout_ = node.node.create_subscription(Log, '/rosout', self.rosout_cb, 10)
+            self.rosout_ = node.node.create_subscription(
+                Log, '/rosout', self.rosout_cb, 10)
             rclpy.spin(node)

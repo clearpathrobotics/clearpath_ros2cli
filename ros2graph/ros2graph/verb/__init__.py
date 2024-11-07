@@ -26,26 +26,33 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-from ros2cli.command import add_subparsers_on_demand
-from ros2cli.command import CommandExtension
+from ros2cli.plugin_system import PLUGIN_SYSTEM_VERSION
+from ros2cli.plugin_system import satisfies_version
 
 
-class RosoutCommand(CommandExtension):
-    """Prints the '/rosout' log stream."""
+class VerbExtension:
+    """
+    The extension point for 'graph' verb extensions.
+
+    The following properties must be defined:
+    * `NAME` (will be set to the entry point name)
+
+    The following methods must be defined:
+    * `main`
+
+    The following methods can be defined:
+    * `add_arguments`
+    """
+
+    NAME = None
+    EXTENSION_POINT_VERSION = '0.1'
+
+    def __init__(self):
+        super(VerbExtension, self).__init__()
+        satisfies_version(PLUGIN_SYSTEM_VERSION, '^0.1')
 
     def add_arguments(self, parser, cli_name):
-        self._subparser = parser
-        # add arguments and sub-commands of verbs
-        add_subparsers_on_demand(
-            parser, cli_name, '_verb', 'ros2rosout.verb', required=False)
+        pass
 
-    def main(self, *, parser, args):
-        if not hasattr(args, '_verb'):
-            # in case no verb was passed
-            self._subparser.print_help()
-            return 0
-
-        extension = getattr(args, '_verb')
-
-        # call the verb's main method
-        return extension.main(args=args)
+    def main(self, *, args):
+        raise NotImplementedError()

@@ -1,11 +1,10 @@
 from setuptools import find_packages
 from setuptools import setup
 
-package_name = 'ros2rosout'
+package_name = 'ros2graph'
 
 setup(
     name=package_name,
-    python_requires='>=3.1',
     version='0.0.0',
     packages=find_packages(exclude=['test']),
     data_files=[
@@ -17,10 +16,8 @@ setup(
     zip_safe=True,
     author='Guillaume Autran',
     author_email='gautran@clearpath.ai',
-    maintainer='Guillaume Autran',
-    maintainer_email='gautran@clearpath.ai',
-    url='',
-    download_url='',
+    maintainer='Clearpath OS Team',
+    maintainer_email='cposteam@clearpath.ai',
     keywords=[],
     classifiers=[
         'Environment :: Console',
@@ -28,23 +25,20 @@ setup(
         'License :: OSI Approved :: 3-Clause BSD License',
         'Programming Language :: Python',
     ],
-    description="""\
-    A convenient command to display the /rosout logs \
-    for ROS 2 command line tools""",
+    description='The graph command for ROS 2 command line tools.',
     long_description="""\
-    The package provides a cli tool to print \
-    the `/rosout` logs in a ROS 2 system""",
+The package provides the graph command for the ROS 2 command line tools.""",
     license='BSD',
     tests_require=['pytest'],
     entry_points={
         'ros2cli.command': [
-            'rosout = ros2rosout.command.rosout:RosoutCommand',
+            'graph = ros2graph.command.graph:GraphCommand',
         ],
         'ros2cli.extension_point': [
-            'ros2rosout.verb = ros2rosout.verb:VerbExtension',
+            'ros2graph.verb = ros2graph.verb:VerbExtension',
         ],
-        'ros2rosout.verb': [
-            'print = ros2rosout.verb.print:PrintVerb'
-        ]
+        'ros2graph.verb': [
+            'dot = ros2graph.verb.dot:DotVerb',
+        ],
     }
 )

@@ -26,20 +26,23 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
+"""Creates the ros2 diagnostics command."""
+
 from ros2cli.command import add_subparsers_on_demand
 from ros2cli.command import CommandExtension
 
 
-class RosoutCommand(CommandExtension):
-    """Prints the '/rosout' log stream."""
+class DiagCommand(CommandExtension):
+    """Pretty print ROS 2 diagnostics."""
 
     def add_arguments(self, parser, cli_name):
+        """Add arguments and sub-commands of verbs."""
         self._subparser = parser
-        # add arguments and sub-commands of verbs
         add_subparsers_on_demand(
-            parser, cli_name, '_verb', 'ros2rosout.verb', required=False)
+            parser, cli_name, '_verb', 'ros2diagnostics.verb', required=False)
 
     def main(self, *, parser, args):
+        """Run main function."""
         if not hasattr(args, '_verb'):
             # in case no verb was passed
             self._subparser.print_help()

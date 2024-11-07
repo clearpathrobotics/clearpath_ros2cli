@@ -30,14 +30,14 @@ from ros2cli.command import add_subparsers_on_demand
 from ros2cli.command import CommandExtension
 
 
-class RosoutCommand(CommandExtension):
-    """Prints the '/rosout' log stream."""
+class GraphCommand(CommandExtension):
+    """Various node related sub-commands."""
 
     def add_arguments(self, parser, cli_name):
         self._subparser = parser
         # add arguments and sub-commands of verbs
         add_subparsers_on_demand(
-            parser, cli_name, '_verb', 'ros2rosout.verb', required=False)
+            parser, cli_name, '_verb', 'ros2graph.verb', required=False)
 
     def main(self, *, parser, args):
         if not hasattr(args, '_verb'):
