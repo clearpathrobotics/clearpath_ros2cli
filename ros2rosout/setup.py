@@ -32,7 +32,7 @@ setup(
     A convenient command to display the /rosout logs \
     for ROS 2 command line tools""",
     long_description="""\
-    The package provides a cli tool to print \
+    The package provides a cli tool to echo \
     the `/rosout` logs in a ROS 2 system""",
     license='BSD',
     tests_require=['pytest'],
@@ -44,7 +44,7 @@ setup(
             'ros2rosout.verb = ros2rosout.verb:VerbExtension',
         ],
         'ros2rosout.verb': [
-            'print = ros2rosout.verb.print:PrintVerb'
+            'echo = ros2rosout.verb.echo:EchoVerb'
         ]
     }
 )

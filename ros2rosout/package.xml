@@ -3,7 +3,7 @@
 <package format="3">
   <name>ros2rosout</name>
   <version>0.0.0</version>
-  <description>A command line tool to print the rosout logs in a ROS 2 system</description>
+  <description>A command line tool to echo the rosout logs in a ROS 2 system</description>
 
   <maintainer email="gautran@clearpath.ai">Guillaume Autran</maintainer>
 
