@@ -32,7 +32,7 @@ from ros2cli.plugin_system import satisfies_version
 
 class VerbExtension:
     """
-    The extension point for 'print' verb extensions.
+    The extension point for 'echo' verb extensions.
 
     The following properties must be defined:
     * `NAME` (will be set to the entry point name)

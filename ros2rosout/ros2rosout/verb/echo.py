@@ -35,8 +35,8 @@ import rclpy
 import re
 
 
-class PrintVerb(VerbExtension):
-    """Outputs the '/rosout' content in a nicely formatted way."""
+class EchoVerb(VerbExtension):
+    """Echo the '/rosout' content with pretty formatting."""
 
     BLACK_TEXT = "\033[30;1m"
     BLUE_TEXT = "\033[34;1m"
@@ -53,25 +53,37 @@ class PrintVerb(VerbExtension):
     def add_arguments(self, parser, cli_name):
         add_arguments(parser)
         parser.add_argument(
-            '-l', '--level', default=Log.INFO, type=int,
-            help='''Print log statement with priority level '
-            greater than this value''')
+            '-l', '--level', default='info', type=str,
+            choices={'debug', 'info', 'warn', 'error', 'fatal'},
+            help='''Echo log statement with priority level
+            greater than this value (default: \'info\')''')
         parser.add_argument(
             '-n', '--node-regex', default=None,
-            help='''Only print log statements from node(s) matching the
+            help='''Only echo log statements from node(s) matching the
             regular expression provided''')
         parser.add_argument(
             '--no-color', action='store_true', default=False,
             help='''Disables the use of ASCII colors
-            for the output of the command''')
+            for the output of the command (default: false)''')
         parser.add_argument(
             '-f', '--function-detail', action='store_true', default=False,
-            help='Output function name, file, and line number')
+            help='Output function name, file, and line number (default: false)')
+
+    def string_to_level(self, level):
+        if level.lower() == "debug":
+            return Log.DEBUG
+        elif level.lower() == "info":
+            return Log.INFO
+        elif level.lower() == "warn":
+            return Log.WARN
+        elif level.lower() == "error":
+            return Log.ERROR
+        elif level.lower() == "fatal":
+            return Log.FATAL
+        else:
+            return Log.INFO
 
     def level_to_string(self, level):
-        if type(level) is not bytes:
-            level = level.to_bytes(1, 'big')
-
         match level:
             case Log.DEBUG:
                 return "DEBUG"
@@ -99,9 +111,6 @@ class PrintVerb(VerbExtension):
         return f"{color}{txt}{self.COLOR_RESET}"
 
     def get_color(self, level):
-        if type(level) is not bytes:
-            level = level.to_bytes(1, 'big')
-
         match level:
             case Log.DEBUG:
                 return self.GREEN_TEXT
@@ -117,7 +126,7 @@ class PrintVerb(VerbExtension):
                 return self.BOLD_TEXT
 
     def rosout_cb(self, msg):
-        if msg.level < self.args_.level:
+        if msg.level < self.string_to_level(self.args_.level):
             return
         if self.args_.node_regex and not re.search(
                 self.args_.node_regex, msg.name):
