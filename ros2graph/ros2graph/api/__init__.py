@@ -94,14 +94,14 @@ def get_node_names(*, node, include_hidden_nodes=False):
     ]
 
 
-def get_topics(remote_node_name, func, *, include_all_topics=False):
+def get_topics(remote_node_name, func, *, include_hidden_topics=False):
     node = parse_node_name(remote_node_name)
     names_and_types = func(node.name, node.namespace)
     return [
         TopicInfo(
             name=t[0],
             types=t[1])
-        for t in names_and_types if include_all_topics or not _is_hidden_name(
+        for t in names_and_types if include_hidden_topics or not _is_hidden_name(
                 t[0])
     ]
 
